@@ -4,6 +4,8 @@ let saldoCuenta = 500;
 let limiteExtraccion = 1000;
 //Servicios
 let agua = 350, telefono = 425, luz = 210, internet = 570;
+//Cuentas amigas
+let cuentaAmiga1 = 1234567, cuentaAmiga2 = 7654321;
 //Ejecución de las funciones que actualizan los valores de las variables en el HTML.
 window.onload = function() {
     cargarNombreEnPantalla();
@@ -14,11 +16,13 @@ window.onload = function() {
 
 //Funciones que tenes que completar
 function cambiarLimiteDeExtraccion() {
-
+    limiteExtraccion = parseInt(prompt("Ingrese el nuevo limite de extraccion: ")); 
+    alert(`Tu nuevo limite de extraccion es: $${limiteExtraccion}`);
+    actualizarLimiteEnPantalla();
 }
 
 function extraerDinero() {
-    let extraer = parseInt(prompt("Ingrese el dinero a extraer: "));
+    let extraer = parseInt(prompt("Ingrese el dinero a extraer:"));
 //Validaciones
     if(isNaN(extraer) || extraer <= 0)
         return alert("Numero invalido");
@@ -31,8 +35,7 @@ function extraerDinero() {
 //Ejecucion
     alert(`Has extraido: $${extraer}
     Saldo anterior: $${saldoCuenta}
-    Saldo actual: $${saldoCuenta - extraer}`);
-    saldoCuenta -= extraer;
+    Saldo actual: $${saldoCuenta -= extraer}`);
     actualizarSaldoEnPantalla();
 }
 //Si hay saldo retorna true.
@@ -50,8 +53,7 @@ function depositarDinero() {
 
     alert(`Has depositado: $${deposito}
     Saldo anterior: $${saldoCuenta}
-    Saldo actual: $${saldoCuenta + deposito}`);
-    saldoCuenta += deposito;
+    Saldo actual: $${saldoCuenta += deposito}`);
     actualizarSaldoEnPantalla();
 }
 
@@ -67,8 +69,7 @@ function pagarServicio() {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${agua}
-                Saldo actual: $${saldoCuenta - agua}`);
-                saldoCuenta -= agua;
+                Saldo actual: $${saldoCuenta -= agua}`);
             } else {
                 alert("No hay suficiente saldo en tu cuenta para pagar este servicio.");
             }
@@ -78,8 +79,7 @@ function pagarServicio() {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${telefono}
-                Saldo actual: $${saldoCuenta - telefono}`);
-                saldoCuenta -= telefono;
+                Saldo actual: $${saldoCuenta -= telefono}`);
             } else {
                 alert("No hay suficiente saldo en tu cuenta para pagar este servicio.");
             }
@@ -89,8 +89,7 @@ function pagarServicio() {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${luz}
-                Saldo actual: $${saldoCuenta - luz}`);
-                saldoCuenta -= luz;
+                Saldo actual: $${saldoCuenta -= luz}`);
             } else {
                 alert("No hay suficiente saldo en tu cuenta para pagar este servicio.");
             }
@@ -100,8 +99,7 @@ function pagarServicio() {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${internet}
-                Saldo actual: $${saldoCuenta - internet}`);
-                saldoCuenta -= internet;
+                Saldo actual: $${saldoCuenta -= internet}`);
             } else {
                 alert("No hay suficiente saldo en tu cuenta para pagar este servicio.");
             }
@@ -114,7 +112,22 @@ function pagarServicio() {
 }
 
 function transferirDinero() {
-
+    let monto = parseInt(prompt("Ingrese el dinero a transferir:"));
+    //Validaciones
+    if(isNaN(monto) || monto <= 0)
+        return alert("Numero invalido");
+    if(!(haySaldoDisponible(monto)))
+        return alert("No hay saldo disponible en tu cuenta para transferir esa cantidad de dinero.");
+    let cuentaEnviar = parseInt(prompt("Ingrese el numero de cuenta al que desea transferir el dinero:"));
+    if(cuentaEnviar == cuentaAmiga1 || cuentaEnviar == cuentaAmiga2){
+        alert(`Se han transferido: $${monto}
+        Cuenta destino: ${cuentaEnviar}
+        Saldo anterior: $${saldoCuenta}
+        Saldo actual: $${saldoCuenta -= monto}`);
+        actualizarSaldoEnPantalla();
+    } else {
+        alert("Solo puede transferir dinero a una cuenta amiga.");
+    }
 }
 
 function iniciarSesion() {
