@@ -8,17 +8,21 @@ let agua = 350, telefono = 425, luz = 210, internet = 570;
 let cuentaAmiga1 = 1234567, cuentaAmiga2 = 7654321;
 //Ejecución de las funciones que actualizan los valores de las variables en el HTML.
 window.onload = function () {
-    iniciarSesion();
     cargarNombreEnPantalla();
     actualizarSaldoEnPantalla();
     actualizarLimiteEnPantalla();
 }
 
-
+iniciarSesion();
 //Funciones que tenes que completar
 function cambiarLimiteDeExtraccion() {
     limiteExtraccion = parseInt(prompt("Ingrese el nuevo limite de extraccion: "));
-    alert(`Tu nuevo limite de extraccion es: $${limiteExtraccion}`);
+    if (isNaN(limiteExtraccion) || limiteExtraccion <= 0)
+        return alert("Numero invalido");
+    else if (limiteExtraccion % 100)
+        return alert("En este homebanking solo podes extraer billetes de $100.");
+    else
+        alert(`Tu nuevo limite de extraccion es: $${limiteExtraccion}`);
     actualizarLimiteEnPantalla();
 }
 
