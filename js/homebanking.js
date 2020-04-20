@@ -1,13 +1,14 @@
 //Declaración de variables
 let nombreUsuario = 'Lucas Galarce';
-let saldoCuenta = 500;
+let saldoCuenta = 1000;
 let limiteExtraccion = 1000;
 //Servicios
 let agua = 350, telefono = 425, luz = 210, internet = 570;
 //Cuentas amigas
 let cuentaAmiga1 = 1234567, cuentaAmiga2 = 7654321;
 //Ejecución de las funciones que actualizan los valores de las variables en el HTML.
-window.onload = function() {
+window.onload = function () {
+    iniciarSesion();
     cargarNombreEnPantalla();
     actualizarSaldoEnPantalla();
     actualizarLimiteEnPantalla();
@@ -16,31 +17,31 @@ window.onload = function() {
 
 //Funciones que tenes que completar
 function cambiarLimiteDeExtraccion() {
-    limiteExtraccion = parseInt(prompt("Ingrese el nuevo limite de extraccion: ")); 
+    limiteExtraccion = parseInt(prompt("Ingrese el nuevo limite de extraccion: "));
     alert(`Tu nuevo limite de extraccion es: $${limiteExtraccion}`);
     actualizarLimiteEnPantalla();
 }
 
 function extraerDinero() {
     let extraer = parseInt(prompt("Ingrese el dinero a extraer:"));
-//Validaciones
-    if(isNaN(extraer) || extraer <= 0)
+    //Validaciones
+    if (isNaN(extraer) || extraer <= 0)
         return alert("Numero invalido");
-    if(!(haySaldoDisponible(extraer)))
+    if (!(haySaldoDisponible(extraer)))
         return alert("No hay saldo disponible en tu cuenta para extraer esa cantidad de dinero.");
-     else if(extraer > limiteExtraccion) 
+    else if (extraer > limiteExtraccion)
         return alert("La cantidad de dinero que deseas extraer es mayor a tu limite de extracción.");
-     else if(extraer % 100) 
+    else if (extraer % 100)
         return alert("Solo puedes extraer billetes de 100.");
-//Ejecucion
+    //Ejecucion
     alert(`Has extraido: $${extraer}
     Saldo anterior: $${saldoCuenta}
     Saldo actual: $${saldoCuenta -= extraer}`);
     actualizarSaldoEnPantalla();
 }
 //Si hay saldo retorna true.
-function haySaldoDisponible(dinero){
-    if(dinero <= saldoCuenta)
+function haySaldoDisponible(dinero) {
+    if (dinero <= saldoCuenta)
         return true;
     else
         return false;
@@ -48,7 +49,7 @@ function haySaldoDisponible(dinero){
 
 function depositarDinero() {
     let deposito = parseInt(prompt("Ingrese el dinero a depositar: "));
-    if(isNaN(deposito) || deposito <= 0)
+    if (isNaN(deposito) || deposito <= 0)
         return alert("Numero invalido");
 
     alert(`Has depositado: $${deposito}
@@ -63,9 +64,9 @@ function pagarServicio() {
     2-Telefono
     3-Luz
     4-Internet`));
-    switch(servicioPagar) {
+    switch (servicioPagar) {
         case 1:
-            if(haySaldoDisponible(agua)){
+            if (haySaldoDisponible(agua)) {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${agua}
@@ -75,7 +76,7 @@ function pagarServicio() {
             }
             break;
         case 2:
-            if(haySaldoDisponible(telefono)){
+            if (haySaldoDisponible(telefono)) {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${telefono}
@@ -85,7 +86,7 @@ function pagarServicio() {
             }
             break;
         case 3:
-            if(haySaldoDisponible(luz)){
+            if (haySaldoDisponible(luz)) {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${luz}
@@ -95,7 +96,7 @@ function pagarServicio() {
             }
             break;
         case 4:
-            if(haySaldoDisponible(internet)){
+            if (haySaldoDisponible(internet)) {
                 alert(`Has pagado el servicio Internet.
                 Saldo anterior: $${saldoCuenta}
                 Dinero descontado: $${internet}
@@ -114,12 +115,12 @@ function pagarServicio() {
 function transferirDinero() {
     let monto = parseInt(prompt("Ingrese el dinero a transferir:"));
     //Validaciones
-    if(isNaN(monto) || monto <= 0)
+    if (isNaN(monto) || monto <= 0)
         return alert("Numero invalido");
-    if(!(haySaldoDisponible(monto)))
+    if (!(haySaldoDisponible(monto)))
         return alert("No hay saldo disponible en tu cuenta para transferir esa cantidad de dinero.");
     let cuentaEnviar = parseInt(prompt("Ingrese el numero de cuenta al que desea transferir el dinero:"));
-    if(cuentaEnviar == cuentaAmiga1 || cuentaEnviar == cuentaAmiga2){
+    if (cuentaEnviar == cuentaAmiga1 || cuentaEnviar == cuentaAmiga2) {
         alert(`Se han transferido: $${monto}
         Cuenta destino: ${cuentaEnviar}
         Saldo anterior: $${saldoCuenta}
@@ -131,7 +132,15 @@ function transferirDinero() {
 }
 
 function iniciarSesion() {
-
+    nombreUsuario = prompt("Ingrese nombre de usuario/a:");
+    let contraseña = prompt("Ingrese su contraseña:");
+    let confirmarContraseña = prompt("Confirme su contraseña:");
+    if (contraseña == confirmarContraseña) {
+        alert(`Bienvenido/a ${nombreUsuario} ya puedes comenzar a realizar operaciones`);
+    } else {
+        alert("Codigo incorrecto. Tu dinero ha sido retenido por cuestiones de seguridad.");
+        saldoCuenta = 0;
+    }
 }
 
 //Funciones que actualizan el valor de las variables en el HTML
