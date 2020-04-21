@@ -16,13 +16,15 @@ window.onload = function () {
 iniciarSesion();
 //Funciones que tenes que completar
 function cambiarLimiteDeExtraccion() {
-    limiteExtraccion = parseInt(prompt("Ingrese el nuevo limite de extraccion: "));
-    if (isNaN(limiteExtraccion) || limiteExtraccion <= 0)
+    let limite = parseInt(prompt("Ingrese el nuevo limite de extraccion: "));
+    if (isNaN(limite) || limite <= 0)
         return alert("Numero invalido");
-    else if (limiteExtraccion % 100)
+    else if (limite % 100)
         return alert("En este homebanking solo podes extraer billetes de $100.");
-    else
+    else {
+        limiteExtraccion = limite;
         alert(`Tu nuevo limite de extraccion es: $${limiteExtraccion}`);
+    }
     actualizarLimiteEnPantalla();
 }
 
